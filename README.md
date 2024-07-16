@@ -7,4 +7,7 @@ The project is now available as preprint on medRxiv:
 
 https://www.medrxiv.org/content/10.1101/2024.07.03.24309252v1
 
-![Alt text](MedRxiv.png)
+![Alt text](MedRxiv.png)<p align="center">
+    <img src="preprint_title.png" alt="Preprint Title" width="300"/>
+    <img src="MedRxiv.png" alt="MedRxiv" width="300"/>
+</p>
