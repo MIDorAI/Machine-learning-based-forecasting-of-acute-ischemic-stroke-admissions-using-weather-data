@@ -1,7 +1,7 @@
-# Machine-learning-based-forecasting-of-acute-ischemic-stroke-admissions-using-weather-data
+# Machine learning-based forecasting of acute ischemic stroke admissions using weather data
 
 
-The project is now available as preprint on medRxiv:
+This is a companion repository to the project published as a preprint on medRxiv:
 
 ## Machine learning-based forecasting of daily acute ischemic stroke admissions using weather data 
 
