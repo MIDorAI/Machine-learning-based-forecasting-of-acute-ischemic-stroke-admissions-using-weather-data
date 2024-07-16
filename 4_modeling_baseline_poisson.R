@@ -89,55 +89,5 @@ openxlsx:::addWorksheet(wb, "Daily")
 	  saveRDS(object = poisson_daily_ischmeic_count,file = paste("./results/poisson_daily_ischemic_count_",site.name,".rda",sep = ""))
 	  rm(poisson_daily_ischmeic_count, preds, rmse, mae)
 	}, silent=TRUE)
-	print("Random Forest")
-	### RF
-	  # hyper parameter
-	try({
-	 set.seed(1492)
-	 tunegrid <- expand.grid(.mtry = seq(17, 20, 1),
-	                          .ntree = seq(1000, 2000, 500), 
-	                          .nodesize = 5)
-	 
-	  #fit model
-	  forest <- train(train_ischemic_count_daily~.,
-	                  data = train_daily, 
-	                  method = customRF, 
-	                  trControl = timecontrol_cv, 
-					          preProcess = c("center","scale"),
-	                  metric = 'RMSE', 
-	                  tuneGrid = tunegrid)
-	  
-	  # final grid 
-	    final_grid <- expand.grid(mtry = forest$bestTune$mtry)
-	 
-	 # final rf model with chosen hyper parameter
-	  X_train = train_features_daily 
-	  y_train = train_ischemic_count_daily
-	  X_test = test_features_daily 
-	  y_test = test_ischemic_count_daily
-	  print("fitting forest based on chosen hyperparameter")
-	  forest_daily_ischmeic_count = train(X_train, y_train,
-	                                   method = 'rf',
-	                                   metric = 'RMSE',
-	                                   preProcess = c("center","scale"),
-	                                   tuneGrid = final_grid,
-	                                   ntree = forest$bestTune$ntree,
-	                                   verbosity = TRUE)
-	  #predict
-	  preds <- predict(forest_daily_ischmeic_count, newdata = as.data.frame(test_features_daily), type = "raw")
-	  #metrics
-	  rmse <- paste("RMSE of random forest daily model for ischmeic count", RMSE(pred = preds, obs = test_ischemic_count_daily))
-	  mae <- paste("MAE of Poisson daily model for ischmeic count", MAE(pred = preds, obs = test_ischemic_count_daily))
-	  openxlsx:::writeData(wb = wb, x = rmse, sheet = "Daily", withFilter = FALSE, startRow = 13)
-	  openxlsx:::writeData(wb = wb, x = mae, sheet = "Daily", withFilter = FALSE, startRow = 14)
-	  #save model
-	  saveRDS(object = forest_daily_ischmeic_count, file = paste("./results/forest_daily_ischemic_count_", site.name, ".rda", sep = ""))
-	  rm(forest_daily_ischmeic_count, forest, preds, rmse, mae)
-	}, silent=TRUE)
 	
-
-
-end.time <- Sys.time()
-
-print(end.time - start.time)
 print("Baseline poisson modelling done")
